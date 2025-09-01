@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Lolipopxn/simple-express-app.git'
+                git branch: 'feature/lab', url: 'https://github.com/Lolipopxn/simple-express-app.git'
             }
         }
 
