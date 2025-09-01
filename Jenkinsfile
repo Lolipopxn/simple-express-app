@@ -25,7 +25,18 @@ pipeline {
         stage('SonarQube Scan') {
             steps {
                 withSonarQubeEnv('sonarqube-25.8.0') {
-                    sh 'npx sonar-scanner -Dsonar.projectKey=Sample_jenkinsApp'
+                    sh '''
+            echo "SONAR_HOST_URL=$SONAR_HOST_URL"
+            # ลองเช็คสถานะ server (ถ้ามี curl)
+            # curl -sSf "$SONAR_HOST_URL/api/system/status" || true
+
+            npx -y sonarqube-scanner \
+              -Dsonar.projectKey=Sample_jenkinsApp \
+              -Dsonar.sources=. \
+              -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
+              -Dsonar.host.url="$SONAR_HOST_URL" \
+              -Dsonar.token="$SONAR_AUTH_TOKEN"
+          '''
                 }
             }
         }
