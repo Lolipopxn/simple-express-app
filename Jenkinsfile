@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'node-24.7.0'
+    }
+
     environment {
         SONARQUBE = credentials('sonarqube-token')
     }
